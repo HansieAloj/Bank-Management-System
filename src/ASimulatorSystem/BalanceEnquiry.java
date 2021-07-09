@@ -15,6 +15,7 @@ class BalanceEnquiry extends JFrame implements ActionListener {
 
     BalanceEnquiry(String pin) {
         this.pin = pin;
+        //nothing
 
         JLabel l3 = new JLabel();
         l3.setBounds(0, 0, 960, 1080);

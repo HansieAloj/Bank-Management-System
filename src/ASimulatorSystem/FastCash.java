@@ -75,30 +75,52 @@ public class FastCash extends JFrame implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent ae) {
-        try {
+
+    	int balance=0;
+        try 
+        {
             String amount = ((JButton)ae.getSource()).getText().substring(3); //k
-            Conn c = new Conn();
-            ResultSet rs = c.s.executeQuery("select * from bank where pin = '"+pin+"'");
-            int balance = 0;
-            while (rs.next()) {
-                if (rs.getString("mode").equals("Deposit")) {
-                    balance += Integer.parseInt(rs.getString("amount"));
-                } else {
-                    balance -= Integer.parseInt(rs.getString("amount"));
-                }
-//            } String num = "17";
+            Conn c1 = new Conn();
+
+            // ResultSet rs = c.s.executeQuery("select * from bank where pin = '"+pin+"'");
+            // while (rs.next()) {
+            //     if (rs.getString("mode").equals("Deposit")) {
+            //         balance += Integer.parseInt(rs.getString("amount"));
+            //     } else {
+            //         balance -= Integer.parseInt(rs.getString("amount"));
+            //     }
+
+
+
+            // } String num = "17";
+
+
+            ResultSet rs = c1.s.executeQuery("select balance from login where pin = '"+pin+"'");
+            if(rs.next())
+            {
+                balance = Integer.parseInt(rs.getString("balance"));
+                System.out.println("Running");
             }
-            if (ae.getSource() != b7 && balance < Integer.parseInt(amount)) {
-                JOptionPane.showMessageDialog(null, "Insuffient Balance");
+
+
+
+            if (ae.getSource() != b7 && balance < Integer.parseInt(amount)) 
+            {
+                JOptionPane.showMessageDialog(null, "Insuffient Balance"+amount+balance);
                 return;
             }
 
-            if (ae.getSource() == b7) {
+            if (ae.getSource() == b7) 
+            {
                 this.setVisible(false);
                 new Transactions(pin).setVisible(true);
-            }else{
+            }
+            else
+            {
                 Date date = new Date();
-                c.s.executeUpdate("insert into bank values('"+pin+"', '"+date+"', 'Withdrawl', '"+amount+"')");
+                c1.s.executeUpdate("insert into bank values('"+pin+"', '"+date+"', 'Withdrawl', '"+amount+"')");
+                c1.s.executeUpdate("update login set balance = balance - "+amount+" where pin = '"+pin+"'");
+                
                 JOptionPane.showMessageDialog(null, "Rs. "+amount+" Debited Successfully");
                     
                 setVisible(false);

@@ -63,35 +63,74 @@ public class Withdrawl extends JFrame implements ActionListener{
     
     public void actionPerformed(ActionEvent ae){
         try{        
+        	int balance=0;
             String amount = t1.getText();
             Date date = new Date();
             if(ae.getSource()==b1){
                 if(t1.getText().equals("")){
                     JOptionPane.showMessageDialog(null, "Please enter the Amount to you want to Withdraw");
-                }else{
-                    Conn c1 = new Conn();
-                    
-                    ResultSet rs = c1.s.executeQuery("select * from bank where pin = '"+pin+"'");
-                    int balance = 0;
-                    while(rs.next()){
-                       if(rs.getString("mode").equals("Deposit")){
-                           balance += Integer.parseInt(rs.getString("amount"));
-                       }else{
-                           balance -= Integer.parseInt(rs.getString("amount"));
-                       }
-                    }
-                    if(balance < Integer.parseInt(amount)){
-                        JOptionPane.showMessageDialog(null, "Insuffient Balance");
-                        return;
-                    }
-                    
-                    c1.s.executeUpdate("insert into bank values('"+pin+"', '"+date+"', 'Withdrawl', '"+amount+"')");
-                    JOptionPane.showMessageDialog(null, "Rs. "+amount+" Debited Successfully");
-                    
-                    setVisible(false);
-                    new Transactions(pin).setVisible(true);
                 }
-            }else if(ae.getSource()==b2){
+
+
+
+            //     else{
+            //         Conn c1 = new Conn();
+                    
+            //         ResultSet rs = c1.s.executeQuery("select * from bank where pin = '"+pin+"'");
+            //         int balance = 0;
+            //         while(rs.next()){
+            //            if(rs.getString("mode").equals("Deposit")){
+            //                balance += Integer.parseInt(rs.getString("amount"));
+            //            }else{
+            //                balance -= Integer.parseInt(rs.getString("amount"));
+            //            }
+            //         }
+            //         if(balance < Integer.parseInt(amount)){
+            //             JOptionPane.showMessageDialog(null, "Insuffient Balance");
+            //             return;
+            //         }
+                    
+            //         c1.s.executeUpdate("insert into bank values('"+pin+"', '"+date+"', 'Withdrawl', '"+amount+"')");
+            //         JOptionPane.showMessageDialog(null, "Rs. "+amount+" Debited Successfully");
+                    
+            //         setVisible(false);
+            //         new Transactions(pin).setVisible(true);
+            //     }
+            // }
+
+            else
+            {
+                Conn c1 = new Conn();
+                
+                // getting balance
+                ResultSet rs = c1.s.executeQuery("select balance from login where pin = '"+pin+"'");
+                if(rs.next())
+                {
+                    balance = Integer.parseInt(rs.getString("balance"));
+                }
+
+                // if less balance 
+                if(balance < Integer.parseInt(amount))
+                {
+                    JOptionPane.showMessageDialog(null, "Insuffient Balance");
+                    return;
+                }
+
+                // inserting to the log of bank
+                c1.s.executeUpdate("insert into bank values('"+pin+"', '"+date+"', 'Withdrawl', '"+amount+"')");
+
+                // update query for balance
+                c1.s.executeUpdate("update login set balance = balance - "+amount+" where pin = '"+pin+"'");
+
+                JOptionPane.showMessageDialog(null, "Rs. "+amount+" Debited Successfully");
+                
+                setVisible(false);
+                new Transactions(pin).setVisible(true);
+            }
+            }
+
+
+            else if(ae.getSource()==b2){
                 setVisible(false);
                 new Transactions(pin).setVisible(true);
             }

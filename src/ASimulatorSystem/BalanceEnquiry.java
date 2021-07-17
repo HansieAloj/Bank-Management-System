@@ -2,6 +2,7 @@ package ASimulatorSystem;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.*;
 import java.sql.ResultSet;
 import javax.swing.*;
 import java.util.*;
@@ -34,20 +35,8 @@ class BalanceEnquiry extends JFrame implements ActionListener {
         b1.setBounds(390, 633, 150, 35);
         l3.add(b1);
         
-        // int balance = 0;
-        // try{
-        //     Conn c1 = new Conn();
-        //     ResultSet rs = c1.s.executeQuery("select * from bank where pin = '"+pin+"'");
-        //     while (rs.next()) {
-        //         if (rs.getString("mode").equals("Deposit")) {
-        //             balance += Integer.parseInt(rs.getString("amount"));
-        //         } else {
-        //             balance -= Integer.parseInt(rs.getString("amount"));
-        //         }
-        //     }
-        // }
 
-
+//      logic for getting balance
         int balance = 0;
         try
         {

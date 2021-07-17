@@ -59,32 +59,25 @@ public class Deposit extends JFrame implements ActionListener{
         try{        
             String amount = t1.getText();
             Date date = new Date();
-//            String date="11-07-2021";
+
             if(ae.getSource()==b1){
                 if(t1.getText().equals("")){
                     JOptionPane.showMessageDialog(null, "Please enter the Amount to you want to Deposit");
                 }
 
-                // else{
-                //     Conn c1 = new Conn();
-                //     c1.s.executeUpdate("insert into bank values('"+pin+"', '"+date+"', 'Deposit', '"+amount+"')");
-                //     JOptionPane.showMessageDialog(null, "Rs. "+amount+" Deposited Successfully");
-                //     setVisible(false);
-                //     new Transactions(pin).setVisible(true);
-                // }
-
-
                 else
                 {
                     Conn c1 = new Conn();
+                    
+                    // insert the transaction details to bank table
                     c1.s.executeUpdate("insert into bank values('"+pin+"', '"+date+"', 'Deposit', '"+amount+"')");
 
-                    // update query for balance
+                    // update query for balance in login table
                     c1.s.executeUpdate("update login set balance = balance + "+amount+" where pin = '"+pin+"'");
 
                     JOptionPane.showMessageDialog(null, "Rs. "+amount+" Deposited Successfully");
                     setVisible(false);
-                    new Transactions(pin).setVisible(true);
+                    new Transactions(pin).setVisible(true);   
                 }
 
 

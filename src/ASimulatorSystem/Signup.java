@@ -133,7 +133,7 @@ public class Signup extends JFrame implements ActionListener{
         groupstatus.add(r4);
         groupstatus.add(r5);
         
-        dateChooser = new JDateChooser();
+    dateChooser = new JDateChooser();
 	dateChooser.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 	dateChooser.setForeground(new Color(105, 105, 105));
 	dateChooser.setBounds(137, 337, 200, 29);
@@ -229,17 +229,19 @@ public class Signup extends JFrame implements ActionListener{
         setDefaultCloseOperation(3);
     }
     
-    private void add(JDateChooser dateChooser2) {
-		// TODO Auto-generated method stub
-		
-	}
+//    private void add(JDateChooser dateChooser2) {
+//		// TODO Auto-generated method stub
+//		
+//	}
 
 	public void actionPerformed(ActionEvent ae){
         
         String formno = first;
         String name = t1.getText();
         String fname = t2.getText();
-//        String dob = ((JTextField) ((Object) dateChooser.getDateEditor()).getUiComponent()).getText();
+        
+        String dob = ((JTextField) dateChooser.getDateEditor().getUiComponent()).getText();
+        
         String gender = null;
         if(r1.isSelected()){ 
             gender = "Male";
@@ -265,7 +267,7 @@ public class Signup extends JFrame implements ActionListener{
         
 
         try{
-        	String dob = "01-01-2000";
+//        	String dob = "01-01-2000";
            
             if(t6.getText().equals("")){
                 JOptionPane.showMessageDialog(null, "Fill all the required fields");

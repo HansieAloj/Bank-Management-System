@@ -26,9 +26,9 @@ public class Signup extends JFrame implements ActionListener{
         
         setTitle("NEW ACCOUNT APPLICATION FORM");
 
-        JLabel l11 = new JLabel();
-        l11.setBounds(20, 0, 100, 100);
-        add(l11);
+//        JLabel l11 = new JLabel();
+//        l11.setBounds(20, 0, 100, 100);
+//        add(l11);
         
         l1 = new JLabel("APPLICATION FORM NO. "+first);
         l1.setFont(new Font("Raleway", Font.BOLD, 38));
@@ -267,9 +267,8 @@ public class Signup extends JFrame implements ActionListener{
         
 
         try{
-//        	String dob = "01-01-2000";
            
-            if(t6.getText().equals("")){
+            if(t6.getText().equals("") || t1.getText().equals("")){
                 JOptionPane.showMessageDialog(null, "Fill all the required fields");
             }else{
                 Conn c1 = new Conn();

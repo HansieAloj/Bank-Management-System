@@ -229,10 +229,7 @@ public class Signup extends JFrame implements ActionListener{
         setDefaultCloseOperation(3);
     }
     
-//    private void add(JDateChooser dateChooser2) {
-//		// TODO Auto-generated method stub
-//		
-//	}
+
 
 	public void actionPerformed(ActionEvent ae){
         

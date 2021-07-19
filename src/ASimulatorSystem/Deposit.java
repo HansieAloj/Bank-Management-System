@@ -13,9 +13,9 @@ public class Deposit extends JFrame implements ActionListener{
     JTextField t1,t2;
     JButton b1,b2,b3;
     JLabel l1,l2,l3;
-    String pin;
-    Deposit(String pin){
-        this.pin = pin;
+    String cardno;
+    Deposit(String cardno){
+        this.cardno = cardno;
 
         JLabel l3 = new JLabel();
         l3.setBounds(0, 0, 960, 1080);
@@ -70,20 +70,20 @@ public class Deposit extends JFrame implements ActionListener{
                     Conn c1 = new Conn();
                     
                     // insert the transaction details to bank table
-                    c1.s.executeUpdate("insert into bank values('"+pin+"', '"+date+"', 'Deposit', '"+amount+"')");
+                    c1.s.executeUpdate("insert into bank values('"+cardno+"', '"+date+"', 'Deposit', '"+amount+"')");
 
                     // update query for balance in login table
-                    c1.s.executeUpdate("update login set balance = balance + "+amount+" where pin = '"+pin+"'");
+                    c1.s.executeUpdate("update login set balance = balance + "+amount+" where cardno = '"+cardno+"'");
 
                     JOptionPane.showMessageDialog(null, "Rs. "+amount+" Deposited Successfully");
                     setVisible(false);
-                    new Transactions(pin).setVisible(true);   
+                    new Transactions(cardno).setVisible(true);   
                 }
 
 
             }else if(ae.getSource()==b2){
                 setVisible(false);
-                new Transactions(pin).setVisible(true);
+                new Transactions(cardno).setVisible(true);
             }
         }catch(Exception e){
             e.printStackTrace();

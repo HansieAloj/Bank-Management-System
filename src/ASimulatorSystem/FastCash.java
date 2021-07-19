@@ -11,10 +11,10 @@ public class FastCash extends JFrame implements ActionListener {
     JLabel l1, l2;
     JButton b1, b2, b3, b4, b5, b6, b7, b8;
     JTextField t1;
-    String pin;
+    String cardno;
 
-    FastCash(String pin) {
-        this.pin = pin;
+    FastCash(String cardno) {
+        this.cardno = cardno;
 
         JLabel l3 = new JLabel();
         l3.setBounds(0, 0, 960, 1080);
@@ -83,7 +83,7 @@ public class FastCash extends JFrame implements ActionListener {
             Conn c1 = new Conn();
 
             // logic for getting the balance
-            ResultSet rs = c1.s.executeQuery("select balance from login where pin = '"+pin+"'");
+            ResultSet rs = c1.s.executeQuery("select balance from login where cardno = '"+cardno+"'");
             if(rs.next())
             {
                 balance = Integer.parseInt(rs.getString("balance"));
@@ -100,22 +100,22 @@ public class FastCash extends JFrame implements ActionListener {
             if (ae.getSource() == b7) 
             {
                 this.setVisible(false);
-                new Transactions(pin).setVisible(true);
+                new Transactions(cardno).setVisible(true);
             }
             else
             {
                 Date date = new Date();
                 
                 // insert the transaction details to bank table
-                c1.s.executeUpdate("insert into bank values('"+pin+"', '"+date+"', 'Withdrawl', '"+amount+"')");
+                c1.s.executeUpdate("insert into bank values('"+cardno+"', '"+date+"', 'Withdrawl', '"+amount+"')");
                 
                 // update query for balance in login table
-                c1.s.executeUpdate("update login set balance = balance - "+amount+" where pin = '"+pin+"'");
+                c1.s.executeUpdate("update login set balance = balance - "+amount+" where cardno = '"+cardno+"'");
                 
                 JOptionPane.showMessageDialog(null, "Rs. "+amount+" Debited Successfully");
                     
                 setVisible(false);
-                new Transactions(pin).setVisible(true);
+                new Transactions(cardno).setVisible(true);
             }
         } catch (Exception e) {
             e.printStackTrace();

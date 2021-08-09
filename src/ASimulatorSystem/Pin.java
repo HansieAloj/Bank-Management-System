@@ -4,15 +4,16 @@ package ASimulatorSystem;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
+import java.sql.*;
 
 public class Pin extends JFrame implements ActionListener{
     
     JPasswordField t1,t2;
     JButton b1,b2;                               
     JLabel l1,l2,l3;
-    String cardno;
-    Pin(String cardno){
-        this.cardno = cardno;
+    String pin;
+    Pin(String pin){
+        this.pin = pin;
        
         JLabel l4 = new JLabel();
         l4.setBounds(0, 0, 960, 1080);
@@ -78,8 +79,6 @@ public class Pin extends JFrame implements ActionListener{
             String npin = t1.getText();
             String rpin = t2.getText();
             
-            
-            // checking if the entered pins are equal
             if(!npin.equals(rpin)){
                 JOptionPane.showMessageDialog(null, "Entered PIN does not match");
                 return;
@@ -94,11 +93,9 @@ public class Pin extends JFrame implements ActionListener{
                 }
                 
                 Conn c1 = new Conn();
-                
-                // updating the pin in the db
-                String q1 = "update bank set pin = '"+rpin+"' where cardno = '"+cardno+"' ";
-                String q2 = "update login set pin = '"+rpin+"' where cardno = '"+cardno+"' ";
-                String q3 = "update signup3 set pin = '"+rpin+"' where cardno = '"+cardno+"' ";
+                String q1 = "update bank set pin = '"+rpin+"' where pin = '"+pin+"' ";
+                String q2 = "update login set pin = '"+rpin+"' where pin = '"+pin+"' ";
+                String q3 = "update signup3 set pin = '"+rpin+"' where pin = '"+pin+"' ";
 
                 c1.s.executeUpdate(q1);
                 c1.s.executeUpdate(q2);
@@ -109,7 +106,7 @@ public class Pin extends JFrame implements ActionListener{
                 new Transactions(rpin).setVisible(true);
             
             }else if(ae.getSource()==b2){
-                new Transactions(cardno).setVisible(true);
+                new Transactions(pin).setVisible(true);
                 setVisible(false);
             }
         }catch(Exception e){

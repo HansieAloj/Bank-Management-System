@@ -9,9 +9,9 @@ public class Transactions extends JFrame implements ActionListener{
 
     JLabel l1;
     JButton b1,b2,b3,b4,b5,b6,b7;
-    String cardno;
-    Transactions(String cardno){
-        this.cardno = cardno;
+    String pin;
+    Transactions(String pin){
+        this.pin = pin;
 
         JLabel l2 = new JLabel();
         l2.setBounds(0, 0, 960, 1080);
@@ -78,21 +78,21 @@ public class Transactions extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent ae){
         if(ae.getSource()==b1){ 
             setVisible(false);
-            new Deposit(cardno).setVisible(true);
+            new Deposit(pin).setVisible(true);
         }else if(ae.getSource()==b2){ 
             setVisible(false);
-            new Withdrawl(cardno).setVisible(true);
+            new Withdrawl(pin).setVisible(true);
         }else if(ae.getSource()==b3){ 
             setVisible(false);
-            new FastCash(cardno).setVisible(true);
+            new FastCash(pin).setVisible(true);
         }else if(ae.getSource()==b4){ 
-            new MiniStatement(cardno).setVisible(true);
+            new MiniStatement(pin).setVisible(true);
         }else if(ae.getSource()==b5){ 
             setVisible(false);
-            new Pin(cardno).setVisible(true);
+            new Pin(pin).setVisible(true);
         }else if(ae.getSource()==b6){ 
             this.setVisible(false);
-            new BalanceEnquiry(cardno).setVisible(true);
+            new BalanceEnquiry(pin).setVisible(true);
         }else if(ae.getSource()==b7){ 
             System.exit(0);
         }

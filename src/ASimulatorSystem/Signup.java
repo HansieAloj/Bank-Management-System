@@ -26,9 +26,9 @@ public class Signup extends JFrame implements ActionListener{
         
         setTitle("NEW ACCOUNT APPLICATION FORM");
 
-//        JLabel l11 = new JLabel();
-//        l11.setBounds(20, 0, 100, 100);
-//        add(l11);
+        JLabel l11 = new JLabel();
+        l11.setBounds(20, 0, 100, 100);
+        add(l11);
         
         l1 = new JLabel("APPLICATION FORM NO. "+first);
         l1.setFont(new Font("Raleway", Font.BOLD, 38));
@@ -133,7 +133,7 @@ public class Signup extends JFrame implements ActionListener{
         groupstatus.add(r4);
         groupstatus.add(r5);
         
-    dateChooser = new JDateChooser();
+        dateChooser = new JDateChooser();
 	dateChooser.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
 	dateChooser.setForeground(new Color(105, 105, 105));
 	dateChooser.setBounds(137, 337, 200, 29);
@@ -229,16 +229,17 @@ public class Signup extends JFrame implements ActionListener{
         setDefaultCloseOperation(3);
     }
     
-
+    private void add(JDateChooser dateChooser2) {
+		// TODO Auto-generated method stub
+		
+	}
 
 	public void actionPerformed(ActionEvent ae){
         
         String formno = first;
         String name = t1.getText();
         String fname = t2.getText();
-        
-        String dob = ((JTextField) dateChooser.getDateEditor().getUiComponent()).getText();
-        
+//        String dob = ((JTextField) ((Object) dateChooser.getDateEditor()).getUiComponent()).getText();
         String gender = null;
         if(r1.isSelected()){ 
             gender = "Male";
@@ -264,8 +265,9 @@ public class Signup extends JFrame implements ActionListener{
         
 
         try{
+        	String dob = "01-01-2000";
            
-            if(t6.getText().equals("") || t1.getText().equals("")){
+            if(t6.getText().equals("")){
                 JOptionPane.showMessageDialog(null, "Fill all the required fields");
             }else{
                 Conn c1 = new Conn();

@@ -12,10 +12,10 @@ class BalanceEnquiry extends JFrame implements ActionListener {
     JTextField t1, t2;
     JButton b1, b2, b3;
     JLabel l1, l2, l3;
-    String cardno;
+    String pin;
 
-    BalanceEnquiry(String cardno) {
-        this.cardno = cardno;
+    BalanceEnquiry(String pin) {
+        this.pin = pin;
 
         JLabel l3 = new JLabel();
         l3.setBounds(0, 0, 960, 1080);
@@ -35,13 +35,25 @@ class BalanceEnquiry extends JFrame implements ActionListener {
         b1.setBounds(390, 633, 150, 35);
         l3.add(b1);
         
+        // int balance = 0;
+        // try{
+        //     Conn c1 = new Conn();
+        //     ResultSet rs = c1.s.executeQuery("select * from bank where pin = '"+pin+"'");
+        //     while (rs.next()) {
+        //         if (rs.getString("mode").equals("Deposit")) {
+        //             balance += Integer.parseInt(rs.getString("amount"));
+        //         } else {
+        //             balance -= Integer.parseInt(rs.getString("amount"));
+        //         }
+        //     }
+        // }
 
-//      logic for getting balance
+
         int balance = 0;
         try
         {
             Conn c1 = new Conn();
-            ResultSet rs = c1.s.executeQuery("select balance from login where cardno = '"+cardno+"'");
+            ResultSet rs = c1.s.executeQuery("select balance from login where pin = '"+pin+"'");
             if(rs.next())
             {
                 balance = Integer.parseInt(rs.getString("balance"));
@@ -64,7 +76,7 @@ class BalanceEnquiry extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent ae) {
         setVisible(false);
-        new Transactions(cardno).setVisible(true);
+        new Transactions(pin).setVisible(true);
     }
 
     public static void main(String[] args) {

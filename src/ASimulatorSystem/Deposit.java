@@ -13,9 +13,9 @@ public class Deposit extends JFrame implements ActionListener{
     JTextField t1,t2;
     JButton b1,b2,b3;
     JLabel l1,l2,l3;
-    String cardno;
-    Deposit(String cardno){
-        this.cardno = cardno;
+    String pin;
+    Deposit(String pin){
+        this.pin = pin;
 
         JLabel l3 = new JLabel();
         l3.setBounds(0, 0, 960, 1080);
@@ -59,31 +59,38 @@ public class Deposit extends JFrame implements ActionListener{
         try{        
             String amount = t1.getText();
             Date date = new Date();
-
+//            String date="11-07-2021";
             if(ae.getSource()==b1){
                 if(t1.getText().equals("")){
                     JOptionPane.showMessageDialog(null, "Please enter the Amount to you want to Deposit");
                 }
 
+                // else{
+                //     Conn c1 = new Conn();
+                //     c1.s.executeUpdate("insert into bank values('"+pin+"', '"+date+"', 'Deposit', '"+amount+"')");
+                //     JOptionPane.showMessageDialog(null, "Rs. "+amount+" Deposited Successfully");
+                //     setVisible(false);
+                //     new Transactions(pin).setVisible(true);
+                // }
+
+
                 else
                 {
                     Conn c1 = new Conn();
-                    
-                    // insert the transaction details to bank table
-                    c1.s.executeUpdate("insert into bank values('"+cardno+"', '"+date+"', 'Deposit', '"+amount+"')");
+                    c1.s.executeUpdate("insert into bank values('"+pin+"', '"+date+"', 'Deposit', '"+amount+"')");
 
-                    // update query for balance in login table
-                    c1.s.executeUpdate("update login set balance = balance + "+amount+" where cardno = '"+cardno+"'");
+                    // update query for balance
+                    c1.s.executeUpdate("update login set balance = balance + "+amount+" where pin = '"+pin+"'");
 
                     JOptionPane.showMessageDialog(null, "Rs. "+amount+" Deposited Successfully");
                     setVisible(false);
-                    new Transactions(cardno).setVisible(true);   
+                    new Transactions(pin).setVisible(true);   
                 }
 
 
             }else if(ae.getSource()==b2){
                 setVisible(false);
-                new Transactions(cardno).setVisible(true);
+                new Transactions(pin).setVisible(true);
             }
         }catch(Exception e){
             e.printStackTrace();

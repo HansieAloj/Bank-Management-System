@@ -9,7 +9,7 @@ public class MiniStatement extends JFrame implements ActionListener{
  
     JButton b1, b2;
     JLabel l1;
-    MiniStatement(String pin){
+    MiniStatement(String cardno){
         super("Mini Statement");
         getContentPane().setBackground(Color.WHITE);
         setSize(400,600);
@@ -33,23 +33,30 @@ public class MiniStatement extends JFrame implements ActionListener{
         
         try{
             Conn c = new Conn();
-            ResultSet rs = c.s.executeQuery("select * from login where pin = '"+pin+"'");
+            
+            // getting the details of user from db
+            ResultSet rs = c.s.executeQuery("select * from login where cardno = '"+cardno+"'");
             while(rs.next()){
                 l3.setText("Card Number:    " + rs.getString("cardno").substring(0, 4) + "XXXXXXXX" + rs.getString("cardno").substring(12));
             }
-        }catch(Exception e){}
-        	 
+        }
+        catch(Exception e){}
+
+
+
         try{
             int balance = 0;
             Conn c1  = new Conn();
-            ResultSet rs = c1.s.executeQuery("SELECT * FROM bank where pin = '"+pin+"'");
+            
+            // getting the transaction details from the bank table
+            ResultSet rs = c1.s.executeQuery("SELECT * FROM bank where cardno = '"+cardno+"'");
             while(rs.next())
             {
                 l1.setText(l1.getText() + "<html>"+rs.getString("date")+ "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + rs.getString("mode") + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;" + rs.getString("amount") + "<br><br><html>");
             }
    
             // getting balance
-            rs = c1.s.executeQuery("select balance from login where pin = '"+pin+"'");
+            rs = c1.s.executeQuery("select balance from login where cardno = '"+cardno+"'");
             if(rs.next())
             {
                 balance = Integer.parseInt(rs.getString("balance"));

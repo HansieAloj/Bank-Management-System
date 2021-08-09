@@ -12,9 +12,9 @@ public class Withdrawl extends JFrame implements ActionListener{
     JTextField t1,t2;
     JButton b1,b2,b3;
     JLabel l1,l2,l3,l4;
-    String pin;
-    Withdrawl(String pin){
-        this.pin = pin;
+    String cardno;
+    Withdrawl(String cardno){
+        this.cardno = cardno;
 
         JLabel l3 = new JLabel();
         l3.setBounds(0, 0, 960, 1080);
@@ -71,39 +71,12 @@ public class Withdrawl extends JFrame implements ActionListener{
                     JOptionPane.showMessageDialog(null, "Please enter the Amount to you want to Withdraw");
                 }
 
-
-
-            //     else{
-            //         Conn c1 = new Conn();
-                    
-            //         ResultSet rs = c1.s.executeQuery("select * from bank where pin = '"+pin+"'");
-            //         int balance = 0;
-            //         while(rs.next()){
-            //            if(rs.getString("mode").equals("Deposit")){
-            //                balance += Integer.parseInt(rs.getString("amount"));
-            //            }else{
-            //                balance -= Integer.parseInt(rs.getString("amount"));
-            //            }
-            //         }
-            //         if(balance < Integer.parseInt(amount)){
-            //             JOptionPane.showMessageDialog(null, "Insuffient Balance");
-            //             return;
-            //         }
-                    
-            //         c1.s.executeUpdate("insert into bank values('"+pin+"', '"+date+"', 'Withdrawl', '"+amount+"')");
-            //         JOptionPane.showMessageDialog(null, "Rs. "+amount+" Debited Successfully");
-                    
-            //         setVisible(false);
-            //         new Transactions(pin).setVisible(true);
-            //     }
-            // }
-
             else
             {
                 Conn c1 = new Conn();
                 
                 // getting balance
-                ResultSet rs = c1.s.executeQuery("select balance from login where pin = '"+pin+"'");
+                ResultSet rs = c1.s.executeQuery("select balance from login where cardno = '"+cardno+"'");
                 if(rs.next())
                 {
                     balance = Integer.parseInt(rs.getString("balance"));
@@ -117,22 +90,22 @@ public class Withdrawl extends JFrame implements ActionListener{
                 }
 
                 // inserting to the log of bank
-                c1.s.executeUpdate("insert into bank values('"+pin+"', '"+date+"', 'Withdrawl', '"+amount+"')");
+                c1.s.executeUpdate("insert into bank values('"+cardno+"', '"+date+"', 'Withdrawl', '"+amount+"')");
 
                 // update query for balance
-                c1.s.executeUpdate("update login set balance = balance - "+amount+" where pin = '"+pin+"'");
+                c1.s.executeUpdate("update login set balance = balance - "+amount+" where cardno = '"+cardno+"'");
 
                 JOptionPane.showMessageDialog(null, "Rs. "+amount+" Debited Successfully");
                 
                 setVisible(false);
-                new Transactions(pin).setVisible(true);
+                new Transactions(cardno).setVisible(true);
             }
             }
 
 
             else if(ae.getSource()==b2){
                 setVisible(false);
-                new Transactions(pin).setVisible(true);
+                new Transactions(cardno).setVisible(true);
             }
         }catch(Exception e){
                 e.printStackTrace();

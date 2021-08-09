@@ -4,16 +4,15 @@ package ASimulatorSystem;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.sql.*;
 
 public class Pin extends JFrame implements ActionListener{
     
-    JPasswordField t1,t2;
+    JPasswordField t1,t2,t0;
     JButton b1,b2;                               
-    JLabel l1,l2,l3;
-    String pin;
-    Pin(String pin){
-        this.pin = pin;
+    JLabel l1,l2,l3,l0;
+    String cardno;
+    Pin(String cardno){
+        this.cardno = cardno;
        
         JLabel l4 = new JLabel();
         l4.setBounds(0, 0, 960, 1080);
@@ -21,15 +20,26 @@ public class Pin extends JFrame implements ActionListener{
         
         l1 = new JLabel("CHANGE YOUR PIN");
         l1.setFont(new Font("System", Font.BOLD, 16));
-//        l1.setForeground(Color.WHITE);
-        
+//      l1.setForeground(Color.WHITE);
+
+
+        // Old pin details
+        l0 = new JLabel("Old PIN:");
+        l0.setFont(new Font("System", Font.BOLD, 16));
+//      l0.setForeground(Color.WHITE);
+
+
+
         l2 = new JLabel("New PIN:");
         l2.setFont(new Font("System", Font.BOLD, 16));
-//        l2.setForeground(Color.WHITE);
+//      l2.setForeground(Color.WHITE);
         
         l3 = new JLabel("Re-Enter New PIN:");
         l3.setFont(new Font("System", Font.BOLD, 16));
-//        l3.setForeground(Color.WHITE);
+//      l3.setForeground(Color.WHITE);
+        
+        t0 = new JPasswordField();
+        t0.setFont(new Font("Raleway", Font.BOLD, 25));
         
         t1 = new JPasswordField();
         t1.setFont(new Font("Raleway", Font.BOLD, 25));
@@ -79,11 +89,13 @@ public class Pin extends JFrame implements ActionListener{
             String npin = t1.getText();
             String rpin = t2.getText();
             
+            
+            // checking if the entered pins are equal
             if(!npin.equals(rpin)){
                 JOptionPane.showMessageDialog(null, "Entered PIN does not match");
                 return;
             }
-            
+
             if(ae.getSource()==b1){
                 if (t1.getText().equals("")){
                     JOptionPane.showMessageDialog(null, "Enter New PIN");
@@ -91,22 +103,22 @@ public class Pin extends JFrame implements ActionListener{
                 if (t2.getText().equals("")){
                     JOptionPane.showMessageDialog(null, "Re-Enter new PIN");
                 }
-                
-                Conn c1 = new Conn();
-                String q1 = "update bank set pin = '"+rpin+"' where pin = '"+pin+"' ";
-                String q2 = "update login set pin = '"+rpin+"' where pin = '"+pin+"' ";
-                String q3 = "update signup3 set pin = '"+rpin+"' where pin = '"+pin+"' ";
 
-                c1.s.executeUpdate(q1);
+                Conn c1 = new Conn();
+
+                // updating the pin in the db
+                String q2 = "update login set pin = '"+rpin+"' where cardno = '"+cardno+"' ";
+                String q3 = "update signup3 set pin = '"+rpin+"' where cardno = '"+cardno+"' ";
+
                 c1.s.executeUpdate(q2);
                 c1.s.executeUpdate(q3);
 
                 JOptionPane.showMessageDialog(null, "PIN changed successfully");
                 setVisible(false);
-                new Transactions(rpin).setVisible(true);
+                new Transactions(cardno).setVisible(true);
             
             }else if(ae.getSource()==b2){
-                new Transactions(pin).setVisible(true);
+                new Transactions(cardno).setVisible(true);
                 setVisible(false);
             }
         }catch(Exception e){
